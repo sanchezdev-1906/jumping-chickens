@@ -1,0 +1,15 @@
+{
+  "name": "jumping-ducks",
+  "version": "1.0.0",
+  "description": "Una aplicacion interactiva",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Joel Sanchez - Sergio Vargas",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
