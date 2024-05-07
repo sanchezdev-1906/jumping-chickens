@@ -151,7 +151,6 @@ buttonJump.addEventListener("click", function () {
     if (!inAir) {
       inAir = true;
       socket.emit("jump", userInfo.cell);
-      jump(userInfo.cell);
       setTimeout(() => {
         inAir = false;
       }, 600);
