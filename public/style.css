@@ -1,0 +1,155 @@
+:root {
+  --shadow: 0 3px 0 black, 0 -3px 0 black, 3px 0px 0 black, -3px 0px 0 black;
+  --shadow-active: 0 2px 0 black, 0 -2px 0 black, 2px 0px 0 black,
+    -2px 0px 0 black;
+
+  --shadow-selected: 0 3px 0 rgb(47, 0, 255), 0 -3px 0 rgb(47, 0, 255),
+    3px 0px 0 rgb(47, 0, 255), -3px 0px 0 rgb(47, 0, 255);
+
+  --button-shadow: 0 3px 0 black, 0 -3px 0 black, 3px 0px 0 black,
+    -3px 0px 0 black;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  font-family: "Pixelify Sans";
+  background-color: #4ab6ff;
+  font-size: 18px;
+}
+h1,
+ul {
+  padding: 0;
+  margin: 0;
+}
+.form {
+  display: none;
+  background-color: white;
+  max-width: 400px;
+  height: max-content;
+  padding: 1em;
+  box-shadow: var(--shadow);
+}
+.form > * {
+  margin-bottom: 1rem;
+}
+.game {
+  display: none;
+  width: 100%;
+  height: 100vh;
+}
+
+.form.visible,
+.game.visible {
+  display: block;
+}
+
+.form__cells {
+  display: grid;
+  grid-template-columns: repeat(3, 75px);
+  grid-auto-rows: 50px;
+  gap: 1em;
+  list-style: none;
+}
+
+.form__cells li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  user-select: none;
+  cursor: pointer;
+}
+.form__cells li {
+  background-color: #ee6567;
+  font-size: 25px;
+  box-shadow: var(--shadow), inset 0px -10px #c6435d, inset 0px -15px #ffffff1a;
+}
+.form__cells li:active {
+  background-color: #ee6567;
+  font-size: 25px;
+  box-shadow: var(--shadow-active), inset 0px -5px #c6435d,
+    inset 0px -10px #ffffff1a;
+}
+
+.form__cells li.selected {
+  background-color: rgb(22, 204, 221);
+  box-shadow: var(--shadow), inset 0px -10px hsl(185, 82%, 38%),
+    inset 0px -15px #ffffff1a;
+}
+
+.form__cells li.user_select {
+  background-color: rgb(134, 253, 134);
+  box-shadow: var(--shadow), inset 0px -10px hsl(120, 97%, 36%),
+    inset 0px -15px #ffffff1a;
+}
+.form__cells li.user_select:active {
+  background-color: rgb(134, 253, 134);
+  box-shadow: var(--shadow-active), inset 0px -5px hsl(120, 97%, 36%),
+    inset 0px -10px #ffffff1a;
+}
+
+.form__cells li.color {
+  box-shadow: var(--shadow);
+}
+
+.form__cells li.color.FFFFFF {
+  background-color: #ffffff;
+  box-shadow: var(--shadow);
+}
+.form__cells li.color.f9ce10 {
+  background-color: #f9ce10;
+  box-shadow: var(--shadow);
+}
+.form__cells li.color.ffd3a8 {
+  background-color: #ffd3a8;
+  box-shadow: var(--shadow);
+}
+.form__cells li.color.selected {
+  box-shadow: var(--shadow-selected);
+}
+
+.form__button {
+  padding: 0.5em 1em;
+  margin: 0 auto;
+  width: 100%;
+
+  font-size: 18px;
+  font-family: "Pixelify Sans";
+
+  border: none;
+  outline: none;
+
+  font-size: 25px;
+  background-color: #4ab6ff;
+  box-shadow: var(--shadow), inset 0px -10px hsl(204, 100%, 45%),
+    inset 0px -15px #ffffff1a;
+}
+
+.form__button:active {
+  box-shadow: var(--shadow-active), inset 0px -5px hsl(204, 100%, 45%),
+    inset 0px -10px #ffffff1a;
+}
+
+.game .btn__container {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game .btn__jump {
+  display: block;
+  width: 200px;
+
+  font-size: 20px;
+  padding: 1em;
+}
