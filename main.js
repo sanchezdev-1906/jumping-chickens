@@ -60,8 +60,9 @@ function agregarUsuario(user, socket) {
         .query(query)
         .then((res) => {
           let cell = user.cell;
+          let color = user.color;
 
-          io.emit("selected", cell);
+          io.emit("selected", { cell: cell, color: color });
 
           client.end();
 
@@ -100,10 +101,10 @@ function obtenerCeldas(socket) {
   const client = new Client(connectionData);
   client.connect();
   client
-    .query("SELECT cell FROM users")
+    .query("SELECT cell, color FROM users")
     .then((response) => {
-      let cells = response.rows.map((row) => row.cell);
-      socket.emit("cells", cells);
+      let users = response.rows;
+      socket.emit("cells", users);
 
       client.end();
     })

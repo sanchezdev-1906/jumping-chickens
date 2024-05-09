@@ -8,34 +8,38 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <form id="form" class="form visible">
         <div class="form__field">
-            <label for="username">Usuario</label>
+            <label class="form__label" for="username">Usuario</label>
             <input id="username" name="username" type="text">
         </div>
-        <p>Selecciona una celda</p>
-        <ul id="form__cells" class="form__cells">
-            <li class="cell_1">1</li>
-            <li class="cell_2">2</li>
-            <li class="cell_3">3</li>
-            <li class="cell_4">4</li>
-            <li class="cell_5">5</li>
-            <li class="cell_6">6</li>
-            <li class="cell_7">7</li>
-            <li class="cell_8">8</li>
-            <li class="cell_9">9</li>
-        </ul>
-        <p>Selecciona un color:</p>
-        <ul id="form__colors" class="form__cells">
-            <li class="color FFFFFF" data-color="#FFFFFF"></li>
-            <li class="color ffd3a8" data-color="#ffd3a8"></li>
-            <li class="color f9ce10" data-color="#f9ce10"></li>
-        </ul>
-        <p id="message">
+        <div class="form__field">
+            <p class="form__label">Selecciona una celda</p>
+            <ul id="form__cells" class="form__cells">
+                <li class="cell_1">1</li>
+                <li class="cell_2">2</li>
+                <li class="cell_3">3</li>
+                <li class="cell_4">4</li>
+                <li class="cell_5">5</li>
+                <li class="cell_6">6</li>
+                <li class="cell_7">7</li>
+                <li class="cell_8">8</li>
+                <li class="cell_9">9</li>
+            </ul>
+        </div>
+        <div class="form__field">
+            <p class="form__label">Selecciona un color:</p>
+            <ul id="form__colors" class="form__cells">
+                <li class="color FFFFFF" data-color="#FFFFFF"></li>
+                <li class="color ffd3a8" data-color="#ffd3a8"></li>
+                <li class="color f9ce10" data-color="#f9ce10"></li>
+            </ul>
+        </div>
+        <p id="message" class="form__message">
         </p>
         <button class="form__button" type="submit">Ingresar</button>
     </form>

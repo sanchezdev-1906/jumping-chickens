@@ -8,17 +8,18 @@ const messageP = document.getElementById("message");
 const buttonJump = document.getElementById("btnjump");
 
 const socket = io();
+let scene;
+let renderChicken;
+let desrenderChicken;
 
 let cellSelected = undefined;
 let colorSelected = undefined;
-let ocupedCells = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let ocupedCells = [];
 let chickens = [];
 let userInfo = {
   username: "",
   cell: 0,
 };
-
-function cargarVista() {}
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -158,7 +159,7 @@ buttonJump.addEventListener("click", function () {
   }
 });
 function init() {
-  const scene = new THREE.Scene();
+  scene = new THREE.Scene();
   scene.background = new THREE.Color(0xdddedf);
   const camera = new THREE.PerspectiveCamera(
     30,
@@ -184,16 +185,61 @@ function init() {
   controls.enableRotate = false;
   controls.update();
 
+  desrenderChicken = (cell) => {
+    for (let i = 0; i < chickens.length; i++) {
+      if (chickens[i].name == cell) {
+        scene.remove(chickens[i]);
+
+        chickens[i].traverse((objeto) => {
+          if (objeto instanceof THREE.Mesh) {
+            if (objeto.geometry) objeto.geometry.dispose();
+            if (objeto.material) {
+              if (Array.isArray(objeto.material)) {
+                objeto.material.forEach((material) => {
+                  material.dispose();
+                });
+              } else {
+                objeto.material.dispose();
+              }
+            }
+          }
+        });
+
+        break;
+      }
+    }
+  };
+  renderChicken = (chicken) => {
+    chicken.receiveShadow = true;
+    scene.add(chicken);
+
+    let x = chicken.name % 3;
+    let y = parseInt((chicken.name - 1) / 3);
+    let largo = 2;
+    let alto = 2.5;
+    let xPos = 0;
+    let yPos = 0;
+
+    if (x === 1) {
+      xPos = 0 - largo;
+    } else if (x === 0) {
+      xPos = 0 + largo;
+    }
+
+    if (y === 0) {
+      yPos = 0 + alto;
+    } else if (y === 2) {
+      yPos = 0 - alto;
+    }
+    chicken.position.set(xPos, yPos, 0);
+  };
   function renderChickens() {
-    ocupedCells.forEach((item) => {
-      let chicken = createChicken(item, "#FFFFFF");
+    chickens.forEach((chicken) => {
       chicken.receiveShadow = true;
       scene.add(chicken);
 
-      chickens.push(chicken);
-
-      let x = item % 3;
-      let y = parseInt((item - 1) / 3);
+      let x = chicken.name % 3;
+      let y = parseInt((chicken.name - 1) / 3);
       let largo = 2;
       let alto = 2.5;
       let xPos = 0;
@@ -247,13 +293,32 @@ function init() {
   window.addEventListener("resize", onWindowResize, false);
 }
 
-init();
-
-socket.on("selected", (cell) => {
-  let li = form.querySelector(".cell_" + cell);
+socket.on("selected", (selected) => {
+  let li = form.querySelector(".cell_" + selected.cell);
+  ocupedCells.push(selected);
+  let chicken = createChicken(selected.cell, selected.color);
+  if (game.classList.contains("visible")) {
+    renderChicken(chicken);
+  }
+  chickens.push(chicken);
   li.classList.add("selected");
 });
 socket.on("deselected", (cell) => {
+  for (let i = 0; i < chickens.length; i++) {
+    if (chickens[i].name == cell) {
+      if (game.classList.contains("visible")) {
+        desrenderChicken(cell);
+      }
+      chickens.splice(i, 1);
+      break;
+    }
+  }
+  for (let i = 0; i < ocupedCells.length; i++) {
+    if (ocupedCells[i].cell === cell) {
+      ocupedCells.splice(i, 1);
+      break;
+    }
+  }
   let li = form.querySelector(".cell_" + cell);
   li.classList.remove("selected");
 });
@@ -261,21 +326,21 @@ socket.on("deselected", (cell) => {
 socket.on("cells", (cells) => {
   ocupedCells = cells;
   cells.forEach((i) => {
-    let li = form.querySelector(".cell_" + i);
+    chickens.push(createChicken(i.cell, i.color));
+    let li = form.querySelector(".cell_" + i.cell);
     li.classList.add("selected");
   });
 });
 
 // recibir mensajes desde el servidor
 socket.on("message", (message) => {
-  console.log(message);
-  // messageP.textContent = message;
+  messageP.textContent = message;
 });
 socket.on("auth", (status) => {
   if (status == 0) {
-    // Cambiar a juego y ocultar el formulario
     game.classList.add("visible");
     form.classList.remove("visible");
+    init();
   }
 });
 
