@@ -17,4 +17,4 @@ jobs:
         run: git remote add gitlab https://gitlab.com/sanchezdev/jumping-chickens.git
 
       - name: Push to GitLab
-        run: git push gitlab HEAD:main
+        run: git push -u gitlab HEAD:main
