@@ -13,7 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Add to GitLab
+        run: git remote add gitlab <https://gitlab.com/sanchezdev/jumping-chickens.git>
+
       - name: Push to GitLab
-        run:
-          git remote add gitlab <https://gitlab.com/sanchezdev/jumping-chickens.git>
-          git push gitlab HEAD:main
+        run: git push gitlab HEAD:main
