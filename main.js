@@ -14,7 +14,7 @@ const connectionData = {
 
 const app = express();
 const server = http.createServer(app);
-const port = 8000;
+const port = process.env.PORT || 8000;
 const io = new Server(server);
 
 function agregarUsuario(user, socket) {
