@@ -53,7 +53,7 @@ function agregarUsuario(user, socket) {
       }
 
       let param1 = "INSERT INTO users(id, username, color, cell) VALUES";
-      let param2 = `('${user.id}', '${user.username}','${user.color}',${user.jump}, ${user.cell})`;
+      let param2 = `('${user.id}', '${user.username}','${user.color}', ${user.cell})`;
       query = param1 + param2;
 
       client
@@ -126,7 +126,6 @@ io.on("connection", (socket) => {
         username: user.username,
         color: user.color,
         cell: user.cell,
-        jump: 0,
       },
       socket
     );
